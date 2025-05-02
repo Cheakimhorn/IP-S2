@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Customer extends Model
 {
-    protected $fillable = ['name', 'email', 'phone'];
+    use HasFactory;
+    protected $fillable = ['name', 'email', 'phone','address'];
 
     public function carts()
     {
@@ -26,5 +29,8 @@ class Customer extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+    public function products(){
+        return $this->hasMany(Product::class);
     }
 }

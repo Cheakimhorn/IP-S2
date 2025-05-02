@@ -6,9 +6,14 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+
 class Order extends Model
+
 {
-    use SoftDeletes; //Enable soft deletes
+    use HasFactory;
+    use SoftDeletes; // Enable soft deletes
 
     protected $dates = ['deleted_at'];
     protected $table = 'orders';
@@ -28,11 +33,12 @@ class Order extends Model
     {
         return $this->hasMany(OrderProduct::class);
     }
-    protected function orderDate(): Attribute{
+
+    protected function orderDate(): Attribute {
         return Attribute::make(
-            // Mutator: Convert input format to MySql format before saving
-            set: fn ($value) => Carbon::createFromFormat('d/m/Y H:i;s', $value)->format('Y-m-d H:i:s'),
+            set: fn ($value) => Carbon::createFromFormat('d/m/Y H:i:s', $value)->format('Y-m-d H:i:s'),
             get: fn ($value) => Carbon::parse($value)->format('d/m/Y H:i:s')
         );
     }
 }
+

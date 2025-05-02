@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payment', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('payment_date');
+            $table->timestamp('payment_date')->nullable(false);
             $table->string('payment_method', 100);
             $table->decimal('amount', 10, 2);
             $table->unsignedBigInteger('order_id')->nullable();
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('order_id')->references('id')->on('order')->onDelete('set null');
-            $table->foreign('customer_id')->references('id')->on('customer')->onDelete('set null');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('set null');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payment');
+        Schema::dropIfExists('payments');
     }
 };

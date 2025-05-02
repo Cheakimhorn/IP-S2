@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('action'); // create, update, delete
             $table->json('changes')->nullable(); // Stores old and new data
             $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
