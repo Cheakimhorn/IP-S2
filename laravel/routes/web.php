@@ -1,28 +1,34 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\productController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UploadController;
 
+// Home route
 Route::get('/', function () {
     return view('welcome');
 });
-// Route::get('/use/{id}', function ($id) {
-//     return "Hello this is the test of wesite $id";
-// });
-// Route::get('/product/{id}',[productController::class,'getProduct']);
 
+ 
+Route::get('/upload_file', function () {
+    return view('upload_file');
+   });
+Route::post('/upload', [UploadController::class, 'upload'])->name('upload');
+
+// File retrieval route (MinIO)
+Route::get('/files/minio/{filename}', [UploadController::class, 'getFromMinio'])->name('file.minio');
+
+// Dashboard route (requires auth)
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Profile routes (requires auth)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Auth routes (provided by Laravel Breeze, Jetstream, etc.)
 require __DIR__.'/auth.php';
-
-
-
