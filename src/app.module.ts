@@ -3,16 +3,18 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { BookModule } from './modules/book/book.module';
+import { BookingModule } from './modules/booking/booking.module';
+import { HotelModule } from './modules/hotel/hotel.module';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: true,
-      typePaths: ['./**/*.graphql'],
+      typePaths: ['./src/**/*.graphql']
     }),
-    BookModule,
+    HotelModule,
+    BookingModule
   ],
   controllers: [AppController],
   providers: [AppService],

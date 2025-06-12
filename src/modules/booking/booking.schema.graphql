@@ -1,0 +1,35 @@
+# Define the Booking type
+type Booking {
+  id: Int!
+  start_date: String!
+  end_date: String!
+  hotel_id: Int!
+  is_checked_in: Boolean!
+  price: Float!
+}
+
+# Queries
+type Query {
+  # Get all bookings
+  bookings: [Booking!]!
+  
+  # Get bookings by a date range
+  bookingsByDateRange(start_date: String!, end_date: String!): [Booking!]!
+}
+
+# Mutations
+type Mutation {
+  # Create a new booking
+  createBooking(
+    start_date: String!
+    end_date: String!
+    hotel_id: Int!
+    price: Float!
+  ): Booking!
+
+  # Cancel an existing booking
+  cancelBooking(id: Int!): Boolean!
+
+  # Check-in to a hotel
+  checkIn(id: Int!): Booking!
+}
